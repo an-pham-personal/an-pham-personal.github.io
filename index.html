@@ -20,12 +20,7 @@
 </head>
 
 <body>
-  <div id="control">
-    <div id="category-control">
-      <label for="categories">Categories</label>
-      <select name="categories" id="categories"></select>
-    </div>
-  </div>
+  <div id="control"></div>
   <div id="result">
     <div id="map">
       <svg width="960" height="600"></svg>
@@ -39,29 +34,9 @@
   <script src="https://rawgit.com/nodeca/pako/master/dist/pako_inflate.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.min.js"></script>
 
-  <script>
-    (async () => {
-      const sqlPromise = initSqlJs({
-        locateFile: filename => './lib/sqljs-wasm/sql-wasm.wasm'
-      })
-      // const dataPromise = fetch("https://anp-ts-demo.s3.ap-southeast-1.amazonaws.com/project.db")
-      const dataPromise = fetch("https://github.com/an-pham-personal/an-pham-personal.github.io/blob/2cdd3c66f4d030487b7fa0ae34cfd51e509db42a/project.db")
-        .then(res => res.arrayBuffer());
-      // const dataPromise = await fetch("https://anp-ts-demo.s3.ap-southeast-1.amazonaws.com/project.db.gz")
-      //   .then(res => pako.inflate(res.arrayBuffer())).catch(err => console.log(err))
-      
-
-      const [SQL, buf] = await Promise.all([sqlPromise, dataPromise])
-      console.log('buf', buf);
-
-      const db = new SQL.Database(new Uint8Array(buf));
-      console.log(db);
-      console.log(db.exec("select * from category;"))
-    })()
-  </script>
   <script src="utils.js"></script>
+  <script src="control.js"></script>
   <script src="render.js"></script>
-
 </body>
 
 </html>
