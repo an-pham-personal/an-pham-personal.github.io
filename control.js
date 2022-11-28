@@ -5,7 +5,7 @@ var labels = {
   category: "Category",
   hospital_type: "Hospital Type",
   hospital_ownership: "Hospital Ownership",
-  payer: "Payer",
+  // payer: "Payer",
   hospital: "Hospital",
   descr: "Short Description",
 };
@@ -45,10 +45,11 @@ init().then((data) => {
   setupDropdown("category", categories);
   setupDropdown("hospital_type", hospitalType);
   setupDropdown("hospital_ownership", hospitalOwnership);
-  setupDropdown("payer", payer);
   setupDropdown("hospital", hospital);
   setupDropdown("descr", description);
   console.log(db);
+  document.getElementById("main").style.display = "block";
+  document.getElementById("loader").style.display = "none";
 });
 
 const query = () => {
