@@ -1,8 +1,13 @@
+// TODO add loading screen
+
 var db;
 var labels = {
-  categories: "Category",
-  "hospital-types": "Hospital Type",
-  "hospital-ownerships": "Hospital Ownership",
+  category: "Category",
+  hospital_type: "Hospital Type",
+  hospital_ownership: "Hospital Ownership",
+  payer: "Payer",
+  hospital: "Hospital",
+  descr: "Short Description",
 };
 
 const init = async () => {
@@ -21,18 +26,73 @@ const init = async () => {
   const hospitalType = db.exec("select * from hospital_type;")[0].values;
   const hospitalOwnership = db.exec("select * from hospital_ownership;")[0]
     .values;
-  console.log(categories);
-  return [categories, hospitalType, hospitalOwnership];
+  const payer = db.exec("select * from payer;")[0].values;
+  const hospital = db.exec("select * from hospital;")[0].values;
+  const descr = db.exec("select * from descr;")[0].values;
+  return [categories, hospitalType, hospitalOwnership, payer, hospital, descr];
 };
 
 init().then((data) => {
   console.log(data);
-  const [categories, hospitalType, hospitalOwnership] = data;
-  setupDropdown("categories", categories);
-  setupDropdown("hospital-types", hospitalType);
-  setupDropdown("hospital-ownerships", hospitalOwnership);
+  const [
+    categories,
+    hospitalType,
+    hospitalOwnership,
+    payer,
+    hospital,
+    description,
+  ] = data;
+  setupDropdown("category", categories);
+  setupDropdown("hospital_type", hospitalType);
+  setupDropdown("hospital_ownership", hospitalOwnership);
+  setupDropdown("payer", payer);
+  setupDropdown("hospital", hospital);
+  setupDropdown("descr", description);
   console.log(db);
 });
+
+const query = () => {
+  const values = {};
+
+  for (let [k, _] of Object.entries(labels)) {
+    const s = document.getElementById(k);
+    if (s.value != -1) {
+      values[k] = s.value;
+    }
+  }
+  console.log(values);
+
+  let sql = [
+    "select m.*",
+    "p.kind as payer",
+    "c.name as category",
+    "ht.kind as hospital_type",
+    "ho.kind as hospital_ownership",
+  ];
+
+  sql = [
+    sql.join(", "),
+    "from main m",
+    "join payer p on m.payer_id = p.id",
+    "join hospital_type ht on m.hospital_type_id = ht.id",
+    "join hospital_ownership ho on m.hospital_ownership_id = ho.id",
+    "join category c on m.category_id = c.id",
+    "where",
+  ];
+
+  let conds = [];
+
+  for (let [k, v] of Object.entries(values)) {
+    conds.push(`${k}_id = ${v}`);
+  }
+
+  sql = sql.join(" ");
+  sql = `${sql} ${conds.join(" and ")}`;
+  sql = `${sql} order by price desc`;
+  console.log(sql);
+  const res = db.exec(sql);
+  console.log(res);
+};
 
 const setupDropdown = (id, data) => {
   const p = document.getElementById("control");
@@ -48,6 +108,10 @@ const setupDropdown = (id, data) => {
   const s = document.createElement("select");
   s.name = id;
   s.id = id;
+  anyOption = document.createElement("option");
+  anyOption.value = -1;
+  anyOption.text = "Any";
+  s.appendChild(anyOption);
 
   ctrl.append(s);
   p.appendChild(ctrl);
@@ -58,4 +122,6 @@ const setupDropdown = (id, data) => {
     opt.text = d[1];
     s.appendChild(opt);
   }
+
+  s.addEventListener("change", query);
 };
