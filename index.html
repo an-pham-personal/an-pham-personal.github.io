@@ -44,7 +44,8 @@
       const sqlPromise = initSqlJs({
         locateFile: filename => './lib/sqljs-wasm/sql-wasm.wasm'
       })
-      const dataPromise = fetch("https://anp-ts-demo.s3.ap-southeast-1.amazonaws.com/project.db")
+      // const dataPromise = fetch("https://anp-ts-demo.s3.ap-southeast-1.amazonaws.com/project.db")
+      const dataPromise = fetch("https://github.com/an-pham-personal/an-pham-personal.github.io/blob/2cdd3c66f4d030487b7fa0ae34cfd51e509db42a/project.db")
         .then(res => res.arrayBuffer());
       // const dataPromise = await fetch("https://anp-ts-demo.s3.ap-southeast-1.amazonaws.com/project.db.gz")
       //   .then(res => pako.inflate(res.arrayBuffer())).catch(err => console.log(err))
