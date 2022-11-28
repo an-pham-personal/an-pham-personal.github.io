@@ -47,18 +47,18 @@ init().then((data) => {
   setupDropdown("hospital_ownership", hospitalOwnership);
   setupDropdown("hospital", hospital);
   setupDropdown("descr", description);
-  console.log(db);
-  document.getElementById("main").style.display = "block";
-  document.getElementById("loader").style.display = "none";
+  $("#main").css("display", "block");
+  $("#loader").css("display", "none");
 });
 
 const query = () => {
   const values = {};
 
   for (let [k, _] of Object.entries(labels)) {
-    const s = document.getElementById(k);
-    if (s.value != -1) {
-      values[k] = s.value;
+    console.log(`#${k}`);
+    const s = $(`#${k}`);
+    if (s.val() != -1) {
+      values[k] = s.val();
     }
   }
   console.log(values);
@@ -96,12 +96,14 @@ const query = () => {
 };
 
 const setupDropdown = (id, data) => {
-  const p = document.getElementById("control");
+  const p = $("#control");
   const ctrl = document.createElement("div");
   ctrl.id = `${id}-control`;
+  ctrl.classList = ["col-6"];
 
   const lb = document.createElement("label");
   lb.htmlFor = id;
+  lb.classList = ["form-label"];
   lb.innerHTML = labels[id];
 
   ctrl.appendChild(lb);
@@ -109,13 +111,14 @@ const setupDropdown = (id, data) => {
   const s = document.createElement("select");
   s.name = id;
   s.id = id;
+  s.classList = ["form-select"];
   anyOption = document.createElement("option");
   anyOption.value = -1;
   anyOption.text = "Any";
   s.appendChild(anyOption);
 
   ctrl.append(s);
-  p.appendChild(ctrl);
+  p.append(ctrl);
 
   for (let d of data) {
     let opt = document.createElement("option");
