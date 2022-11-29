@@ -113,3 +113,5 @@ const setupDropdown = (id, data) => {
   $("#control").append(s);
   $(s).on("change", query);
 };
+
+const listResult = (results) => {};
