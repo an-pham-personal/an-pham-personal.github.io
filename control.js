@@ -69,6 +69,7 @@ const query = () => {
     "c.name as category",
     "ht.kind as hospital_type",
     "ho.kind as hospital_ownership",
+    "h.*",
   ];
 
   sql = [
@@ -78,6 +79,7 @@ const query = () => {
     "join hospital_type ht on m.hospital_type_id = ht.id",
     "join hospital_ownership ho on m.hospital_ownership_id = ho.id",
     "join category c on m.category_id = c.id",
+    "join hospital h on m.hospital_id = h.id",
     "where",
   ];
 

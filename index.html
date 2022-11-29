@@ -16,37 +16,85 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
 
     <link rel="stylesheet" href="styles.css" />
     <title>CS6242 - US Medical Care Finder</title>
   </head>
   <body class="container">
-    <h1 class="text-primary">CS6242 - US Medical Care Finder</h1>
+    <h1 class="text-warning">CS6242 - US Medical Care Finder</h1>
     <div id="loader">
       <div
         class="spinner-border text-warning"
         style="width: 3rem; height: 3rem"
         role="status"
       ></div>
-      <p class="text-info text-warning">Loading data...</p>
+      <p class="text-warning">Loading data...</p>
     </div>
 
     <div id="main" style="display: none" class="animate-bottom row">
-      <div id="control" class="row row-cols-2 g-2"></div>
-      <div id="result" class="row">
-        <div class="result-row row">
-          <div class="hospital">
-            UNITED HEALTH CARE UHCCPGO GOLDEN RULE BOX 31374 UHC 735
+      <div id="control" class="row row-cols-2 g-3 border p-4"></div>
+      <div id="result" class="row p-2 m-2">
+        <div class="result-row row shadow border border-primary">
+          <div class="hospital p-1">
+            <div class="name h5">METHODIST HOSPITAL UNION COUNTY</div>
+            <div class="rating">
+              <span class="val">
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+              </span>
+            </div>
+            <div class="address">
+              <a
+                class="text-decoration-none"
+                target="_blank"
+                href="https://maps.google.com/?q=METHODIST HOSPITAL UNION COUNTY,4604 US HIGHWAY 60 WEST,MORGANFIELD,Kentucky, KY, 42437"
+              >
+                <p>
+                  <i class="fa-solid fa-location-dot text-info"></i>
+                  <span class="text-muted"
+                    >4604 US HIGHWAY 60 WEST, MORGANFIELD, KY 42437 - (123)
+                    456-789
+                  </span>
+                </p>
+              </a>
+            </div>
+
+            <div class="desc text-muted">
+              <i class="fa-solid fa-hospital"></i>
+              <span class="type text-dark">Critical Access Hospitals</span>
+              <span class="ownership"
+                ><small>Voluntary non-profit - Church</small></span
+              >
+            </div>
+            <div class="desc text-muted">
+              <i class="fa-solid fa-truck-medical"></i>
+              <span class="attr">Emergency Service?</span>
+              <span class="val">
+                <i class="fa-solid fa-check text-success"></i>
+                <!-- <i class="fa-solid fa-xmark text-danger"></i> -->
+              </span>
+              234
+              <i class="fa-solid fa-bed-pulse text-success"></i>
+            </div>
+            <div class="desc text-muted">
+              <span class="price"
+                ><i class="fa-solid fa-tags"></i> Historical Price:
+                $454.79</span
+              >
+
+              <span class="price"
+                ><i class="fa-solid fa-tags"></i> Recommended Price:
+                $254.79</span
+              >
+            </div>
           </div>
-          <div class="address">1234 Elon Dr., Tesla City, CA, 31374</div>
-          <div class="price">$500</div>
-          <div class="predicted">300</div>
-          <div class="zip">30978</div>
-          <div class="bed">234</div>
-          <div class="emergency"></div>
-          <div class="rating">4</div>
-          <div class="type">Acute Care Hospitals</div>
-          <div class="ownership">Voluntary non-profit - Private</div>
         </div>
       </div>
       <div id="map" class="row">
