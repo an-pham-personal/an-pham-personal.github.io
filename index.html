@@ -24,8 +24,8 @@
     <link rel="stylesheet" href="styles.css" />
     <title>CS6242 - US Medical Care Finder</title>
   </head>
-  <body class="container">
-    <h1 class="text-warning">CS6242 - US Medical Care Finder</h1>
+  <body class="container p-3">
+    <h1 class="text-warning m-2">CS6242 - US Medical Care Finder</h1>
     <div id="loader">
       <div
         class="spinner-border text-warning"
@@ -37,6 +37,9 @@
 
     <div id="main" style="display: none" class="animate-bottom row">
       <div id="control" class="row row-cols-2 g-3 border p-4"></div>
+      <div id="map" class="row">
+        <svg width="960" height="600"></svg>
+      </div>
       <div id="result" class="row p-2 m-2 border">
         <div class="result-row row border-bottom p-1 m-1">
           <div class="hospital p-1">
@@ -80,68 +83,9 @@
                 <i class="fa-solid fa-check text-success"></i>
                 <!-- <i class="fa-solid fa-xmark text-danger"></i> -->
               </span>
+               -  234 Beds <i class="fa-solid fa-bed-pulse"></i> 
             </div>
             <div class="desc text-muted">
-              <i class="fa-solid fa-bed-pulse"></i> 234 Beds
-            </div>
-            <div class="desc text-muted">
-              <span class="price"
-                ><i class="fa-solid fa-tags"></i> Historical Price:
-                $454.79</span
-              >
-              <i class="fa-sharp fa-solid fa-arrow-up text-danger"></i>
-
-              Compare to recommended price:
-                $254.79</span
-              >
-            </div>
-          </div>
-        </div>
-        <div class="result-row row border-bottom p-1 m-1">
-          <div class="hospital p-1">
-            <div class="name h5">METHODIST HOSPITAL UNION COUNTY</div>
-            <div class="rating">
-              <span class="val">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-              </span>
-            </div>
-            <div class="address">
-              <a
-                class="text-decoration-none"
-                target="_blank"
-                href="https://maps.google.com/?q=METHODIST HOSPITAL UNION COUNTY,4604 US HIGHWAY 60 WEST,MORGANFIELD,Kentucky, KY, 42437"
-              >
-                <p>
-                  <i class="fa-solid fa-location-dot text-info"></i>
-                  <span class="text-muted"
-                    >4604 US HIGHWAY 60 WEST, MORGANFIELD, KY 42437 - (123)
-                    456-789
-                  </span>
-                </p>
-              </a>
-            </div>
-
-            <div class="desc text-muted">
-              <i class="fa-solid fa-hospital"></i>
-              <span class="type">Critical Access Hospitals</span>
-              <span class="ownership"
-                ><small>- Voluntary non-profit - Church</small></span
-              >
-            </div>
-            <div class="desc text-muted">
-              <i class="fa-solid fa-truck-medical"></i>
-              <span class="attr">Emergency Service?</span>
-              <span class="val">
-                <i class="fa-solid fa-check text-success"></i>
-                <!-- <i class="fa-solid fa-xmark text-danger"></i> -->
-              </span>
-            </div>
-            <div class="desc text-muted">
-              <i class="fa-solid fa-bed-pulse"></i> 234 Beds
             </div>
             <div class="desc text-muted">
               <span class="price"
@@ -150,15 +94,12 @@
               >
               <i class="fa-sharp fa-solid fa-arrow-up text-danger"></i>
 
-              Compare to recommended price:
+              Compared to reference price:
                 $254.79</span
               >
             </div>
           </div>
         </div>
-      </div>
-      <div id="map" class="row">
-        <svg width="960" height="600"></svg>
       </div>
     </div>
 

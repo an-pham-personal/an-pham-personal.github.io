@@ -8,6 +8,7 @@ var labels = {
   // payer: "Payer",
   hospital: "Hospital",
   descr: "Short Description",
+  state: "State",
 };
 
 const init = async () => {
@@ -47,6 +48,13 @@ init().then((data) => {
   setupDropdown("hospital_ownership", hospitalOwnership);
   setupDropdown("hospital", hospital);
   setupDropdown("descr", description);
+
+  setupDropdown(
+    "state",
+    Object.entries(stateAbbr)
+      .map((k, v) => [k, v])
+      .map((e) => e[0])
+  );
   $("#main").css("display", "block");
   $("#loader").css("display", "none");
 });
@@ -86,12 +94,18 @@ const query = () => {
   let conds = [];
 
   for (let [k, v] of Object.entries(values)) {
-    conds.push(`${k}_id = ${v}`);
+    if (k === "state") {
+      console.log(k, v);
+      conds.push(`h.state = '${v}'`);
+    } else {
+      conds.push(`${k}_id = ${v}`);
+    }
   }
+  console.log(conds);
 
   sql = sql.join(" ");
   sql = `${sql} ${conds.join(" and ")}`;
-  sql = `${sql} order by price desc`;
+  sql = `${sql} order by price desc limit 5`;
   console.log(sql);
   const res = db.exec(sql);
   console.log(res);
@@ -114,4 +128,83 @@ const setupDropdown = (id, data) => {
   $(s).on("change", query);
 };
 
-const listResult = (results) => {};
+const listResult = (results) => {
+  const tmpl = [];
+  const res = $("#result");
+  const cols = results[0].columns;
+
+  results[0].values.forEach((r) => {
+    const name = r[cols.indexOf("name")];
+    const rating = r[cols.indexOf("hospital_rating")];
+
+    const row = [
+      `<div class="result-row row border-bottom p-1 m-1">`,
+      `<div class="hospital p-1">`,
+      `<div class="name h5">${name}</div>`,
+      `<div class="rating">`,
+      `<span class="val">`,
+    ];
+
+    for (let i = 0; i < 5; i++) {
+      if (i < rating) {
+        row.push(`<span class="fa fa-star checked"></span>`);
+      } else {
+        row.push(`<span class="fa fa-star"></span>`);
+      }
+    }
+
+    row = [
+      ...row,
+      `</span>`,
+      `</div>`,
+      `<div class="address">`,
+      `<a class="text-decoration-none" target="_blank"`,
+      `href="https://maps.google.com/?q=`,
+    ];
+  });
+
+  const VT = [
+    '                href="https://maps.google.com/?q=METHODIST HOSPITAL UNION COUNTY,4604 US HIGHWAY 60 WEST,MORGANFIELD,Kentucky, KY, 42437"',
+    "              >",
+    "                <p>",
+    '                  <i class="fa-solid fa-location-dot text-info"></i>',
+    '                  <span class="text-muted"',
+    "                    >4604 US HIGHWAY 60 WEST, MORGANFIELD, KY 42437 - (123)",
+    "                    456-789",
+    "                  </span>",
+    "                </p>",
+    "              </a>",
+    "            </div>",
+    "",
+    '            <div class="desc text-muted">',
+    '              <i class="fa-solid fa-hospital"></i>',
+    '              <span class="type">Critical Access Hospitals</span>',
+    '              <span class="ownership"',
+    "                ><small>- Voluntary non-profit - Church</small></span",
+    "              >",
+    "            </div>",
+    '            <div class="desc text-muted">',
+    '              <i class="fa-solid fa-truck-medical"></i>',
+    '              <span class="attr">Emergency Service?</span>',
+    '              <span class="val">',
+    '                <i class="fa-solid fa-check text-success"></i>',
+    '                <!-- <i class="fa-solid fa-xmark text-danger"></i> -->',
+    "              </span>",
+    "            </div>",
+    '            <div class="desc text-muted">',
+    '              <i class="fa-solid fa-bed-pulse"></i> 234 Beds',
+    "            </div>",
+    '            <div class="desc text-muted">',
+    '              <span class="price"',
+    '                ><i class="fa-solid fa-tags"></i> Historical Price:',
+    "                $454.79</span",
+    "              >",
+    '              <i class="fa-sharp fa-solid fa-arrow-up text-danger"></i>',
+    "              Compare to recommended price:",
+    "                $254.79</span",
+    "              >",
+    "            </div>",
+    "          </div>",
+    "        </div>",
+  ];
+};
