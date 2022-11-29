@@ -155,6 +155,9 @@ const listResult = (results) => {
   let seen = new Set();
   let counter = 0;
 
+  res.empty();
+  res.removeClass("d-none");
+  res.addClass("d-block");
   for (let r of results[0].values) {
     const v = extractResult(cols, r);
 
