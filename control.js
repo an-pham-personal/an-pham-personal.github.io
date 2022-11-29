@@ -96,36 +96,18 @@ const query = () => {
 };
 
 const setupDropdown = (id, data) => {
-  const p = $("#control");
-  const ctrl = document.createElement("div");
-  ctrl.id = `${id}-control`;
-  ctrl.classList = ["col-6"];
-
-  const lb = document.createElement("label");
-  lb.htmlFor = id;
-  lb.classList = ["form-label"];
-  lb.innerHTML = labels[id];
-
-  ctrl.appendChild(lb);
-
-  const s = document.createElement("select");
-  s.name = id;
-  s.id = id;
-  s.classList = ["form-select"];
-  anyOption = document.createElement("option");
-  anyOption.value = -1;
-  anyOption.text = "Any";
-  s.appendChild(anyOption);
-
-  ctrl.append(s);
-  p.append(ctrl);
+  const html = [
+    `<div id="${id}-control" class="col-6">`,
+    `<label for="${id}" class="form-label">${labels[id]}</label>`,
+    `<select name="${id}" id="${id}" class="form-select">`,
+    `<option value="-1">Any</option>`,
+  ];
 
   for (let d of data) {
-    let opt = document.createElement("option");
-    opt.value = d[0];
-    opt.text = d[1];
-    s.appendChild(opt);
+    html.push(`<option value="${d[0]}">${d[1]}</option>`);
   }
-
-  s.addEventListener("change", query);
+  html.push(`</select>`, `</div>`);
+  const s = $.parseHTML(html.join(""));
+  $("#control").append(s);
+  $(s).on("change", query);
 };
