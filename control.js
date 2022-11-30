@@ -32,7 +32,7 @@ const init = async () => {
 };
 
 init().then((data) => {
-  console.log(data);
+  // console.log(data);
   const [
     categories,
     hospitalType,
@@ -96,12 +96,12 @@ const query = () => {
       conds.push(`${k}_id = ${v}`);
     }
   }
-  console.log(conds);
+  // console.log(conds);
 
   sql = sql.join(" ");
   sql = `${sql} ${conds.join(" and ")}`;
   sql = `${sql} order by price desc`;
-  console.log(sql);
+  // console.log(sql);
   const res = db.exec(sql);
   console.log(res);
   listResult(res);

@@ -68,7 +68,7 @@ const renderMap = (cols, result) => {
       if (states.has(name)) {
         const h = lookup[name];
         const v = extractResult(cols, h);
-        console.log(v);
+
         $("#tooltip-wrapper").empty();
         $("#tooltip-wrapper").hide();
         $("#tooltip-wrapper").append(rowHTML(v));
