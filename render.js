@@ -37,7 +37,6 @@ d3.json("states-albers-10m.json", function (error, us) {
 });
 
 const renderMap = (cols, result) => {
-  $("#map").removeClass("d-none");
   const states = new Set();
   const prices = [];
   const lookup = {};
@@ -49,6 +48,13 @@ const renderMap = (cols, result) => {
     prices.push(price);
     lookup[name] = r;
   });
+
+  if (result.length == 1 || states.length == 1) {
+    $("#map").addClass("d-none");
+    return;
+  }
+
+  $("#map").removeClass("d-none");
 
   const colorScale = d3
     .scaleThreshold()

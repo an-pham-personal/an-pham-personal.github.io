@@ -213,6 +213,12 @@ const rowHTML = (v) => {
 };
 
 const listResult = (results) => {
+  if (results.length == 0) {
+    $("#result").addClass("d-none");
+    $("#map").addClass("d-none");
+    return;
+  }
+
   const res = $("#result");
   const cols = results[0].columns;
   let seen = new Set();
