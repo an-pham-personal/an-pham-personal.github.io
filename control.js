@@ -1,5 +1,3 @@
-// TODO add loading screen
-
 var db;
 var labels = {
   category: "Category",
@@ -154,6 +152,7 @@ const listResult = (results) => {
   const cols = results[0].columns;
   let seen = new Set();
   let counter = 0;
+  let mapData = [];
 
   res.empty();
   res.removeClass("d-none");
@@ -215,8 +214,6 @@ const listResult = (results) => {
     row = [
       ...row,
       `</span>`,
-      // `</div>`,
-      // `<div class="desc text-muted">`,
       ` - ${v.beds} <i class="fa-solid fa-bed-pulse"></i>`,
       `</div>`,
       `<div class="desc text-muted">`,
@@ -225,7 +222,7 @@ const listResult = (results) => {
         v.price
       )}</span> `,
       `<i class="fa-sharp fa-solid fa-arrow-up text-danger"></i> `,
-      `Compare to recommended price: ${currencyFormatter.format(
+      `Compare to market price: ${currencyFormatter.format(
         v.predicted
       )}</span>`,
       `</div>`,
@@ -235,11 +232,14 @@ const listResult = (results) => {
 
     console.log(row);
     res.append($(row.join("")));
+    mapData.push(r);
     counter++;
     if (counter >= 5) {
       break;
     }
   }
+
+  renderMap(cols, mapData);
 };
 
 // <div class="result-row row border-bottom p-1 m-1">

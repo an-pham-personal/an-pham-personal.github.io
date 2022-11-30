@@ -28,16 +28,16 @@
     <h1 class="text-warning m-3 p-2">CS6242 - US Medical Care Finder</h1>
     <div id="loader">
       <div
-        class="spinner-border text-warning"
+        class="spinner-border text-warning d-none"
         style="width: 3rem; height: 3rem"
         role="status"
       ></div>
       <p class="text-warning">Loading data...</p>
     </div>
 
-    <div id="main" style="display: none" class="animate-bottom container">
+    <div id="main" class="animate-bottom container">
       <div id="control" class="row row-cols-2 g-3 border p-3"></div>
-      <div id="map" class="row d-none">
+      <div id="map" class="row">
         <svg width="960" height="600"></svg>
       </div>
       <div id="result" class="row p-2 m-2 border d-none"></div>
@@ -45,6 +45,7 @@
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://d3js.org/topojson.v2.min.js"></script>
+    <!-- <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script> -->
     <!-- <script src="https://rawgit.com/nodeca/pako/master/dist/pako_inflate.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.min.js"></script>
 

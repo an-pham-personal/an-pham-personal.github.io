@@ -12,12 +12,10 @@ var svg = d3
   .attr("width", outerWidth)
   .attr("height", outerHeight);
 
-// enter code to create color scale
-// var colorScale = d3.scaleQuantile().range(d3.schemeBlues[4]);
-
 var path = d3.geoPath();
 
-// d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
+// ['#eff3ff', '#c6dbef', '#9ecae1', '#6baed6', '#4292c6', '#2171b5', '#084594']
+// ['#eff3ff', '#bdd7e7', '#6baed6', '#2171b5']
 d3.json("states-albers-10m.json", function (error, us) {
   if (error) throw error;
 
@@ -31,20 +29,35 @@ d3.json("states-albers-10m.json", function (error, us) {
     .attr("name", function (d) {
       return d.properties.name;
     })
+    .attr("stroke", "#6baed6")
+    .attr("fill", "#bdd7e7")
     .attr("d", path);
 
-  svg
-    .append("path")
-    .attr("class", "state-borders")
-    .attr(
-      "d",
-      path(
-        topojson.mesh(us, us.objects.states, function (a, b) {
-          return a !== b;
-        })
-      )
-    );
+  // svg
+  //   .append("path")
+  //   .attr("class", "state-borders")
+  //   .attr(
+  //     "d",
+  //     path(
+  //       topojson.mesh(us, us.objects.states, function (a, b) {
+  //         return a !== b;
+  //       })
+  //     )
+  //   );
 });
+
+const renderMap = (cols, result) => {
+  const states = new Set();
+  result.forEach((r) => states.add(stateAbbr[r[21]]));
+
+  d3.selectAll("path").attr("fill", (d) => {
+    const name = d.properties.name;
+    if (states.has(name)) {
+      return "#2171b5";
+    }
+    return "#bdd7e7";
+  });
+};
 
 const criteria = {
   category: "Categories",
@@ -55,33 +68,3 @@ const criteria = {
   beds: "Beds",
   emergency_services: "Emergency Services",
 };
-
-// d3.csv("final_table_sample_v2.csv", function (error, masterData) {
-//   if (error) throw error;
-
-//   let processed = processData(masterData);
-//   console.log(processed);
-// });
-
-// processData = (data) => {
-//   console.log(data);
-//   let processed = {};
-
-//   criteria.forEach((c) => {
-//     processed[c] = new Set();
-//   });
-
-//   data.forEach((e) => {
-//     criteria.forEach((c) => {
-//       processed[c].add(e[c]);
-//     });
-//   });
-
-//   if ("beds" in processed) {
-//     processed["beds"] = Array.from(processed["beds"]).map((e) =>
-//       parseInt(e, 10)
-//     );
-//   }
-
-//   return processed;
-// };
