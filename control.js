@@ -57,7 +57,7 @@ init().then((data) => {
   $("#loader").css("display", "none");
 });
 
-const query = () => {
+const query = (order = "price") => {
   const values = {};
 
   for (let [k, _] of Object.entries(labels)) {
@@ -100,7 +100,18 @@ const query = () => {
 
   sql = sql.join(" ");
   sql = `${sql} ${conds.join(" and ")}`;
-  sql = `${sql} order by price desc`;
+  switch (order) {
+    case "price":
+      sql = `${sql} order by price`;
+      break;
+    case "beds":
+      sql = `${sql} order by beds desc`;
+      break;
+    case "rating":
+      sql = `${sql} order by hospital_rating desc`;
+      break;
+  }
+  // sql = `${sql} order by price desc`;
   // console.log(sql);
   const res = db.exec(sql);
   console.log(res);
@@ -216,6 +227,7 @@ const listResult = (results) => {
   if (results.length == 0) {
     $("#result").addClass("d-none");
     $("#map").addClass("d-none");
+    $("#filter").addClass("d-none");
     return;
   }
 
@@ -227,7 +239,7 @@ const listResult = (results) => {
 
   res.empty();
   res.removeClass("d-none");
-  res.addClass("d-block");
+  $("#filter").removeClass("d-none");
   for (let r of results[0].values) {
     const v = extractResult(cols, r);
 

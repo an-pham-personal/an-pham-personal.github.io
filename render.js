@@ -51,6 +51,7 @@ const renderMap = (cols, result) => {
 
   if (result.length == 1 || states.length == 1) {
     $("#map").addClass("d-none");
+    $("#result").addClass("d-none");
     return;
   }
 
