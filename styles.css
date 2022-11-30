@@ -18,16 +18,12 @@
   text-align: center;
 }
 
-div.tooltip {
+#tooltip-wrapper {
   position: absolute;
-  text-align: center;
-  width: 500px;
-  height: 180px;
-  padding: 2px;
-  background: lightsteelblue;
-  border: 0px;
-  border-radius: 8px;
-  pointer-events: none;
+  /* top: 200px;
+  left: 0px; */
+  width: auto;
+  background: white;
 }
 
 .checked {

@@ -37,15 +37,17 @@ d3.json("states-albers-10m.json", function (error, us) {
 });
 
 const renderMap = (cols, result) => {
+  $("#map").removeClass("d-none");
   const states = new Set();
   const prices = [];
   const lookup = {};
+
   result.forEach((r) => {
     const name = stateAbbr[r[cols.indexOf("state")]];
     const price = r[cols.indexOf("price")];
     states.add(name);
     prices.push(price);
-    lookup[name] = price;
+    lookup[name] = r;
   });
 
   const colorScale = d3
@@ -57,12 +59,29 @@ const renderMap = (cols, result) => {
     .attr("fill", (d) => {
       const name = d.properties.name;
       if (states.has(name)) {
-        return colorScale(lookup[name]);
+        return colorScale(lookup[name][cols.indexOf("price")]);
       }
       return "#eff3ff";
     })
     .on("mouseover", (d) => {
-      console.log(d);
+      const name = d.properties.name;
+      if (states.has(name)) {
+        const h = lookup[name];
+        const v = extractResult(cols, h);
+        console.log(v);
+        $("#tooltip-wrapper").empty();
+        $("#tooltip-wrapper").hide();
+        $("#tooltip-wrapper").append(rowHTML(v));
+        const [x, y] = [d3.event.pageX, d3.event.pageY];
+        $("#tooltip-wrapper").css({
+          top: `${y - 100}px`,
+          left: `${x - 250}px`,
+        });
+        $("#tooltip-wrapper").mouseleave(function () {
+          $(this).hide();
+        });
+        $("#tooltip-wrapper").show();
+      }
     });
 };
 

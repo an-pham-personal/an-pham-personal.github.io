@@ -146,6 +146,72 @@ const extractResult = (cols, r) => {
   return vals;
 };
 
+const rowHTML = (v) => {
+  let row = [
+    `<div class="result-row row border-bottom p-1 m-1">`,
+    `<div class="hospital p-1">`,
+    `<div class="name h5">${v.name}</div>`,
+    `<div class="rating">`,
+    `<span class="val">`,
+  ];
+
+  for (let i = 0; i < 5; i++) {
+    if (i < v.hospital_rating) {
+      row.push(`<span class="fa fa-star checked"></span> `);
+    } else {
+      row.push(`<span class="fa fa-star"></span> `);
+    }
+  }
+
+  row = [
+    ...row,
+    `</span>`,
+    `</div>`,
+    `<div class="address">`,
+    `<a class="text-decoration-none" target="_blank"`,
+    `href="https://maps.google.com/?q=${v.name}, ${v.address}, ${v.city}, ${v.state} ${v.zip}">`,
+    `<p>`,
+    `<i class="fa-solid fa-location-dot text-info"></i> `,
+    `<span class="text-muted">`,
+    `${v.address}, ${v.city}, ${v.state} ${v.zip} - ${v.phone}</span>`,
+    `</p>`,
+    `</a>`,
+    `</div>`,
+    `<div class="desc text-muted">`,
+    `<i class="fa-solid fa-hospital"></i> `,
+    `<span class="type">${v.hospital_type}</span>`,
+    `<span class="ownership"><small>- ${v.hospital_ownership}</small></span>`,
+    `</div>`,
+    `<div class="desc text-muted">`,
+    `<i class="fa-solid fa-truck-medical"></i> `,
+    `<span class="attr">Emergency Service? </span>`,
+    `<span class="val">`,
+  ];
+
+  if (v.emergency_services == "True") {
+    row.push(`<i class="fa-solid fa-check text-success"></i>`);
+  } else {
+    row.push(`<i class="fa-solid fa-xmark text-danger"></i>`);
+  }
+  row = [
+    ...row,
+    `</span>`,
+    ` - ${v.beds} <i class="fa-solid fa-bed-pulse"></i>`,
+    `</div>`,
+    `<div class="desc text-muted">`,
+    `<span class="price"`,
+    `><i class="fa-solid fa-tags"></i> Historical Price: ${currencyFormatter.format(
+      v.price
+    )}</span> `,
+    `<i class="fa-sharp fa-solid fa-arrow-up text-danger"></i> `,
+    `Compare to market price: ${currencyFormatter.format(v.predicted)}</span>`,
+    `</div>`,
+    `</div>`,
+    `</div>`,
+  ];
+  return row.join("");
+};
+
 const listResult = (results) => {
   const res = $("#result");
   const cols = results[0].columns;
@@ -164,72 +230,7 @@ const listResult = (results) => {
     }
     seen.add(v.hospital_id);
 
-    let row = [
-      `<div class="result-row row border-bottom p-1 m-1">`,
-      `<div class="hospital p-1">`,
-      `<div class="name h5">${v.name}</div>`,
-      `<div class="rating">`,
-      `<span class="val">`,
-    ];
-
-    for (let i = 0; i < 5; i++) {
-      if (i < v.hospital_rating) {
-        row.push(`<span class="fa fa-star checked"></span> `);
-      } else {
-        row.push(`<span class="fa fa-star"></span> `);
-      }
-    }
-
-    row = [
-      ...row,
-      `</span>`,
-      `</div>`,
-      `<div class="address">`,
-      `<a class="text-decoration-none" target="_blank"`,
-      `href="https://maps.google.com/?q=${v.name}, ${v.address}, ${v.city}, ${v.state} ${v.zip}">`,
-      `<p>`,
-      `<i class="fa-solid fa-location-dot text-info"></i> `,
-      `<span class="text-muted">`,
-      `${v.address}, ${v.city}, ${v.state} ${v.zip} - ${v.phone}</span>`,
-      `</p>`,
-      `</a>`,
-      `</div>`,
-      `<div class="desc text-muted">`,
-      `<i class="fa-solid fa-hospital"></i> `,
-      `<span class="type">${v.hospital_type}</span>`,
-      `<span class="ownership"><small>- ${v.hospital_ownership}</small></span>`,
-      `</div>`,
-      `<div class="desc text-muted">`,
-      `<i class="fa-solid fa-truck-medical"></i> `,
-      `<span class="attr">Emergency Service? </span>`,
-      `<span class="val">`,
-    ];
-
-    if (v.emergency_services == "True") {
-      row.push(`<i class="fa-solid fa-check text-success"></i>`);
-    } else {
-      row.push(`<i class="fa-solid fa-xmark text-danger"></i>`);
-    }
-    row = [
-      ...row,
-      `</span>`,
-      ` - ${v.beds} <i class="fa-solid fa-bed-pulse"></i>`,
-      `</div>`,
-      `<div class="desc text-muted">`,
-      `<span class="price"`,
-      `><i class="fa-solid fa-tags"></i> Historical Price: ${currencyFormatter.format(
-        v.price
-      )}</span> `,
-      `<i class="fa-sharp fa-solid fa-arrow-up text-danger"></i> `,
-      `Compare to market price: ${currencyFormatter.format(
-        v.predicted
-      )}</span>`,
-      `</div>`,
-      `</div>`,
-      `</div>`,
-    ];
-
-    res.append($(row.join("")));
+    res.append(rowHTML(v));
     mapData.push(r);
     counter++;
     if (counter >= 5) {

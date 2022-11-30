@@ -28,7 +28,7 @@
     <h1 class="text-warning m-3 p-2">CS6242 - US Medical Care Finder</h1>
     <div id="loader">
       <div
-        class="spinner-border text-warning d-none"
+        class="spinner-border text-warning"
         style="width: 3rem; height: 3rem"
         role="status"
       ></div>
@@ -37,14 +37,14 @@
 
     <div id="main" class="animate-bottom container">
       <div id="control" class="row row-cols-2 g-3 border p-3 rounded"></div>
-      <div id="map" class="row animate-bottom">
+      <div id="map" class="row animate-bottom d-none">
         <svg width="960" height="600"></svg>
       </div>
       <div
         id="result"
         class="row p-2 m-2 border d-none animate-bottom rounded"
       ></div>
-      <div id="tooltip-wrapper"></div>
+      <div id="tooltip-wrapper" class="border border-round p-1"></div>
     </div>
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
