@@ -247,6 +247,10 @@ const listResult = (results) => {
   renderMap(cols, mapData);
 };
 
+const sort = (kind) => {
+  console.log(kind);
+};
+
 // <div class="result-row row border-bottom p-1 m-1">
 // <div class="hospital p-1">
 //   <div class="name h5">METHODIST HOSPITAL UNION COUNTY</div>
