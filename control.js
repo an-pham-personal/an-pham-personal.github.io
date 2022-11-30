@@ -216,7 +216,16 @@ const rowHTML = (v) => {
     `><i class="fa-solid fa-tags"></i> Historical Price: ${currencyFormatter.format(
       v.price
     )}</span> `,
-    `<i class="fa-sharp fa-solid fa-arrow-up text-danger"></i> `,
+  ];
+
+  if (v.price <= v.predicted) {
+    row.push(`<i class="fa-sharp fa-solid fa-arrow-down text-success"></i> `);
+  } else {
+    row.push(`<i class="fa-sharp fa-solid fa-arrow-up text-danger"></i> `);
+  }
+
+  row = [
+    ...row,
     `Compare to market price: ${currencyFormatter.format(v.predicted)}</span>`,
     `</div>`,
     `</div>`,
