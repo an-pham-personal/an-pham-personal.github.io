@@ -10,16 +10,16 @@ var labels = {
 };
 
 const init = async () => {
-  const sqlPromise = initSqlJs({
+  const SQL = await initSqlJs({
     locateFile: (filename) => "./lib/sqljs-wasm/sql-wasm.wasm",
   });
-  const dataPromise = fetch(
-    "https://anp-ts-demo.s3.ap-southeast-1.amazonaws.com/project.db"
-  ).then((res) => res.arrayBuffer());
-  // const dataPromise = await fetch("https://anp-ts-demo.s3.ap-southeast-1.amazonaws.com/project.db.gz")
-  //   .then(res => pako.inflate(res.arrayBuffer())).catch(err => console.log(err))
 
-  const [SQL, buf] = await Promise.all([sqlPromise, dataPromise]);
+  const buf = await fetch(
+    "https://anp-ts-demo.s3.ap-southeast-1.amazonaws.com/project.db.gz"
+  )
+    .then((res) => res.arrayBuffer())
+    .then((data) => pako.inflate(data));
+
   db = new SQL.Database(new Uint8Array(buf));
   const categories = db.exec("select * from category;")[0].values;
   const hospitalType = db.exec("select * from hospital_type;")[0].values;
@@ -116,7 +116,7 @@ const query = (order = "price") => {
   // sql = `${sql} order by price desc`;
   // console.log(sql);
   const res = db.exec(sql);
-  console.log(res);
+  // console.log(res);
   listResult(res);
 };
 
