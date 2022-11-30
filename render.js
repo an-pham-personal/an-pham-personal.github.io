@@ -16,6 +16,8 @@ var path = d3.geoPath();
 
 // ['#eff3ff', '#c6dbef', '#9ecae1', '#6baed6', '#4292c6', '#2171b5', '#084594']
 // ['#eff3ff', '#bdd7e7', '#6baed6', '#2171b5']
+// ["#eff3ff", "#bdd7e7", "#6baed6", "#3182bd", "#08519c"]
+// orange ['#feedde', '#fdd0a2', '#fdae6b', '#fd8d3c', '#f16913', '#d94801', '#8c2d04']
 d3.json("states-albers-10m.json", function (error, us) {
   if (error) throw error;
 
@@ -29,34 +31,39 @@ d3.json("states-albers-10m.json", function (error, us) {
     .attr("name", function (d) {
       return d.properties.name;
     })
-    .attr("stroke", "#6baed6")
-    .attr("fill", "#bdd7e7")
+    .attr("stroke", "#c6dbef")
+    .attr("fill", "#eff3ff")
     .attr("d", path);
-
-  // svg
-  //   .append("path")
-  //   .attr("class", "state-borders")
-  //   .attr(
-  //     "d",
-  //     path(
-  //       topojson.mesh(us, us.objects.states, function (a, b) {
-  //         return a !== b;
-  //       })
-  //     )
-  //   );
 });
 
 const renderMap = (cols, result) => {
   const states = new Set();
-  result.forEach((r) => states.add(stateAbbr[r[21]]));
-
-  d3.selectAll("path").attr("fill", (d) => {
-    const name = d.properties.name;
-    if (states.has(name)) {
-      return "#2171b5";
-    }
-    return "#bdd7e7";
+  const prices = [];
+  const lookup = {};
+  result.forEach((r) => {
+    const name = stateAbbr[r[cols.indexOf("state")]];
+    const price = r[cols.indexOf("price")];
+    states.add(name);
+    prices.push(price);
+    lookup[name] = price;
   });
+
+  const colorScale = d3
+    .scaleThreshold()
+    .domain(prices)
+    .range(["#6baed6", "#4292c6", "#2171b5", "#084594"]);
+
+  d3.selectAll("path")
+    .attr("fill", (d) => {
+      const name = d.properties.name;
+      if (states.has(name)) {
+        return colorScale(lookup[name]);
+      }
+      return "#eff3ff";
+    })
+    .on("mouseover", (d) => {
+      console.log(d);
+    });
 };
 
 const criteria = {

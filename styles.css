@@ -1,5 +1,5 @@
 .states :hover {
-  fill: #2171b5;
+  fill: #9ecae1;
 }
 
 .state-borders {
@@ -16,6 +16,18 @@
   left: 50%;
   top: 50%;
   text-align: center;
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 500px;
+  height: 180px;
+  padding: 2px;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
 }
 
 .checked {

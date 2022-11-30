@@ -143,7 +143,6 @@ const extractResult = (cols, r) => {
     predicted: 1,
   };
   Object.keys(vals).forEach((k) => (vals[k] = r[cols.indexOf(k)]));
-  console.log(vals);
   return vals;
 };
 
@@ -230,7 +229,6 @@ const listResult = (results) => {
       `</div>`,
     ];
 
-    console.log(row);
     res.append($(row.join("")));
     mapData.push(r);
     counter++;
