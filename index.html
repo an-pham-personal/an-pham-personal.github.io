@@ -36,7 +36,10 @@
     </div>
 
     <div id="main" class="animate-bottom container">
-      <div id="control" class="row row-cols-2 g-3 border p-3 rounded"></div>
+      <div
+        id="control"
+        class="row row-cols-2 g-3 border p-3 rounded d-none"
+      ></div>
       <div id="map" class="row animate-bottom d-none">
         <svg width="960" height="600"></svg>
       </div>
@@ -75,7 +78,7 @@
         id="result"
         class="row p-2 m-2 border d-none animate-bottom rounded"
       ></div>
-      <div id="tooltip-wrapper" class="border border-round p-1"></div>
+      <div id="tooltip-wrapper" class="border border-round p-1 d-none"></div>
     </div>
 
     <script src="https://d3js.org/d3.v4.min.js"></script>

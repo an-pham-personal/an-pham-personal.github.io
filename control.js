@@ -41,6 +41,7 @@ init().then((data) => {
     hospital,
     description,
   ] = data;
+  $("#control").removeClass("d-none");
   setupDropdown("category", categories);
   setupDropdown("hospital_type", hospitalType);
   setupDropdown("hospital_ownership", hospitalOwnership);
@@ -55,6 +56,7 @@ init().then((data) => {
   );
   $("#main").css("display", "block");
   $("#loader").css("display", "none");
+  $("#tooltip-wrapper").removeClass("d-none");
 });
 
 const query = (order = "price") => {
