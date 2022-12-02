@@ -1,11 +1,11 @@
 var db;
 var labels = {
-  category: "Category",
+  category: "Treatment/Service Category",
   hospital_type: "Hospital Type",
   hospital_ownership: "Hospital Ownership",
   // payer: "Payer",
   hospital: "Hospital",
-  descr: "Short Description",
+  descr: "Treatment/Service",
   state: "State",
 };
 
@@ -226,7 +226,9 @@ const rowHTML = (v) => {
 
   row = [
     ...row,
-    `Compare to market price: ${currencyFormatter.format(v.predicted)}</span>`,
+    `Compare to reference price: ${currencyFormatter.format(
+      v.predicted
+    )}</span>`,
     `</div>`,
     `</div>`,
     `</div>`,
