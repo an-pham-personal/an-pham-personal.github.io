@@ -76,6 +76,7 @@ const query = (order = "price") => {
     "ht.kind as hospital_type",
     "ho.kind as hospital_ownership",
     "h.*",
+    "d.*",
   ];
 
   sql = [
@@ -86,6 +87,7 @@ const query = (order = "price") => {
     "join hospital_ownership ho on m.hospital_ownership_id = ho.id",
     "join category c on m.category_id = c.id",
     "join hospital h on m.hospital_id = h.id",
+    "join descr d on m.descr_id = d.id",
     "where",
   ];
 
@@ -116,7 +118,7 @@ const query = (order = "price") => {
   // sql = `${sql} order by price desc`;
   // console.log(sql);
   const res = db.exec(sql);
-  // console.log(res);
+  console.log(res);
   listResult(res);
 };
 
@@ -154,6 +156,7 @@ const extractResult = (cols, r) => {
     beds: 1,
     price: 1,
     predicted: 1,
+    short: 1,
   };
   Object.keys(vals).forEach((k) => (vals[k] = r[cols.indexOf(k)]));
   return vals;
@@ -213,7 +216,7 @@ const rowHTML = (v) => {
     `</div>`,
     `<div class="desc text-muted">`,
     `<span class="price"`,
-    `><i class="fa-solid fa-tags"></i> Historical Price: ${currencyFormatter.format(
+    `><i class="fa-solid fa-tags"></i> ${v.short}: ${currencyFormatter.format(
       v.price
     )}</span> `,
   ];
