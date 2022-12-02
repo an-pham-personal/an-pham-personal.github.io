@@ -216,9 +216,10 @@ const rowHTML = (v) => {
     `</div>`,
     `<div class="desc text-muted">`,
     `<span class="price"`,
-    `><i class="fa-solid fa-tags"></i> ${v.short}: ${currencyFormatter.format(
-      v.price
-    )}</span> `,
+    `><i class="fa-solid fa-tags"></i> ${v.short.slice(
+      0,
+      16
+    )}: ${currencyFormatter.format(v.price)}</span> `,
   ];
 
   if (v.price <= v.predicted) {
